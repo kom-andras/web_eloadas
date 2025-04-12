@@ -38,3 +38,20 @@ a:active{
 li { 
     display:inline; 
 } 
+
+table, th, td { 
+     border: 1px solid black;
+     border-collapse: collapse; 
+     padding: 5px; 
+}
+
+th { 
+    cursor: pointer; 
+    background-color: #f0f0f0; 
+}
+
+nav a.active {
+    font-weight: bold;
+    color: red;
+    text-decoration: underline;
+  }

@@ -1,36 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Táblázat</title>
+  <meta charset="UTF-8">
+  <title>Egyszerű Táblázat</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="kijelez.js" defer></script>
+
 </head>
 <body>
-    <header>
-        <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>        
-    </header>
-    <nav>
-        <ul>
-            <li>
-                <a href="tablazat.html">Táblázat</a>
-            </li>
-            <li>
-                <a href="html_5.html">HTML5</a>
-            </li>
-            <li>
-                <a href="chartjs.html">ChartJS</a>
-            </li>
-            <li>
-                <a href="ajax.html">AJAX</a>
-            </li>
-            <li>
-                <a href="oojs.html">OOJS</a>
-            </li>
-        </ul>
-    </nav>
-    <footer>
-        Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
-    </footer>
+  <header>
+    <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>        
+</header>
+<nav>
+    <ul>
+        <li>
+            <a href="tablazat.html">Táblázat</a>
+        </li>
+        <li>
+            <a href="html_5.html">HTML5</a>
+        </li>
+        <li>
+            <a href="chartjs.html">ChartJS</a>
+        </li>
+        <li>
+            <a href="ajax.html">AJAX</a>
+        </li>
+        <li>
+            <a href="oojs.html">OOJS</a>
+        </li>
+    </ul>
+</nav>
+<footer>
+    Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
+</footer>
+<form onsubmit="addRow(); return false;">
+  <input id="n" placeholder="Név" required>
+  <input id="k" type="number" placeholder="Kor" min="1" max="120" required>
+  <input id="v" placeholder="Város" required>
+  <input id="e" type="email" placeholder="Email" required>
+  <button>+</button>
+</form>
+
+<table id="t">
+  <thead>
+    <tr>
+      <th onclick="sort(0)">Név</th>
+      <th onclick="sort(1)">Kor</th>
+      <th onclick="sort(2)">Város</th>
+      <th onclick="sort(3)">Email</th>
+      <th>Művelet</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script>
+function addRow() {
+  const n = nInput.value, k = kInput.value, v = vInput.value, e = eInput.value;
+  const r = t.insertRow();
+  [n,k,v,e].forEach(val => r.insertCell().textContent = val);
+  r.insertCell().innerHTML = '<button onclick="editRow(this)">✏️</button> <button onclick="delRow(this)">❌</button>';
+  form.reset();
+}
+
+function delRow(btn) {
+  btn.closest('tr').remove();
+}
+
+function editRow(btn) {
+  const c = btn.closest('tr').cells;
+  [nInput.value, kInput.value, vInput.value, eInput.value] = [c[0].textContent, c[1].textContent, c[2].textContent, c[3].textContent];
+  delRow(btn);
+}
+
+function sort(col) {
+  const rows = Array.from(t.tBodies[0].rows);
+  const asc = t.dataset.sort !== "asc";
+  rows.sort((a, b) => {
+    const A = a.cells[col].textContent;
+    const B = b.cells[col].textContent;
+    return (isNaN(A) ? A.localeCompare(B) : A - B) * (asc ? 1 : -1);
+  });
+  rows.forEach(r => t.tBodies[0].appendChild(r));
+  t.dataset.sort = asc ? "asc" : "desc";
+}
+
+// rövidítések a mezőkhöz
+const nInput = document.getElementById("n");
+const kInput = document.getElementById("k");
+const vInput = document.getElementById("v");
+const eInput = document.getElementById("e");
+const t = document.getElementById("t");
+const form = document.querySelector("form");
+</script>
+
 </body>
 </html>
