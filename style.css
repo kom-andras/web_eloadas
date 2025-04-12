@@ -30,6 +30,10 @@ a {
 a:hover{
     background-color: #9c499c;
 }
+a.active{
+    background-color:#9c499c;
+}
+
 li { 
     display:inline; 
 } 
