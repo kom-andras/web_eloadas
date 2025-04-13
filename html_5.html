@@ -1,36 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>HTML 5</title>
+  <meta charset="UTF-8">
+  <title>HTML5 Példák</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="kijelez.js" defer></script>
+
 </head>
 <body>
-    <header>
-        <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>        
-    </header>
-    <nav>
-        <ul>
-            <li>
-                <a href="tablazat.html">Táblázat</a>
-            </li>
-            <li>
-                <a href="html_5.html">HTML5</a>
-            </li>
-            <li>
-                <a href="chartjs.html">ChartJS</a>
-            </li>
-            <li>
-                <a href="ajax.html">AJAX</a>
-            </li>
-            <li>
-                <a href="oojs.html">OOJS</a>
-            </li>
-        </ul>
-    </nav>
-    <footer>
-        Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
-    </footer>
+  <header>
+    <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>        
+</header>
+<nav>
+    <ul>
+        <li>
+            <a href="tablazat.html">Táblázat</a>
+        </li>
+        <li>
+            <a href="html_5.html">HTML5</a>
+        </li>
+        <li>
+            <a href="chartjs.html">ChartJS</a>
+        </li>
+        <li>
+            <a href="ajax.html">AJAX</a>
+        </li>
+        <li>
+            <a href="oojs.html">OOJS</a>
+        </li>
+    </ul>
+</nav>
+
+</head>
+<body>
+
+<h1>HTML5 mini példák</h1>
+
+<section>
+  <h2>Web Storage</h2>
+  <button onclick="localStorage.setItem('teszt', 'Szia!')">Mentés</button>
+  <button onclick="alert(localStorage.getItem('teszt'))">Betöltés</button>
+</section>
+
+<section>
+  <h2>Web Worker</h2>
+  <button onclick="startWorker()">Indítás</button>
+  <p id="workerResult"></p>
+</section>
+
+<section>
+  <h2>Server-Sent Events</h2>
+  <button onclick="startSSE()">Kezdés</button>
+  <div id="sse"></div>
+</section>
+
+<section>
+  <h2>Geolocation</h2>
+  <button onclick="getLocation()">Helyzetem</button>
+  <p id="geo"></p>
+</section>
+
+<section>
+  <h2>Drag and Drop</h2>
+  <div id="dropzone" ondrop="drop(event)" ondragover="event.preventDefault()" style="width:200px;height:50px;border:1px dashed">Dobd ide</div>
+  <p draggable="true" ondragstart="drag(event)" id="dragme">Húzható elem</p>
+</section>
+
+<section>
+  <h2>Canvas</h2>
+  <canvas id="c" width="100" height="100" style="border:1px solid"></canvas>
+</section>
+
+<section>
+  <h2>SVG</h2>
+  <svg width="100" height="100">
+    <circle cx="50" cy="50" r="40" fill="lightblue" />
+  </svg>
+</section>
+
+<script>
+// Web Worker
+let worker;
+function startWorker() {
+  if (window.Worker) {
+    worker = new Worker(URL.createObjectURL(new Blob([`onmessage = () => postMessage("Helló a háttérből!")`])));
+    worker.onmessage = e => document.getElementById("workerResult").textContent = e.data;
+    worker.postMessage("");
+  }
+}
+
+// SSE
+function startSSE() {
+  if (!!window.EventSource) {
+    const sse = new EventSource("data:text/event-stream;charset=utf-8, retry:1000\ndata: Üzenet szerverről\n\n");
+    sse.onmessage = e => document.getElementById("sse").textContent = e.data;
+  }
+}
+
+// Geolocation
+function getLocation() {
+  navigator.geolocation.getCurrentPosition(pos => {
+    document.getElementById("geo").textContent = `Lat: ${pos.coords.latitude}, Lon: ${pos.coords.longitude}`;
+  });
+}
+
+// Drag & Drop
+function drag(e) {
+  e.dataTransfer.setData("text", e.target.id);
+}
+function drop(e) {
+  const id = e.dataTransfer.getData("text");
+  e.target.appendChild(document.getElementById(id));
+}
+
+// Canvas
+const ctx = document.getElementById("c").getContext("2d");
+ctx.fillStyle = "red";
+ctx.fillRect(10, 10, 80, 80);
+</script>
+<footer>
+  Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
+</footer>
 </body>
 </html>
