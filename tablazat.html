@@ -30,9 +30,7 @@
         </li>
     </ul>
 </nav>
-<footer>
-    Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
-</footer>
+
 <form onsubmit="addRow(); return false;">
   <input id="n" placeholder="Név" required>
   <input id="k" type="number" placeholder="Kor" min="1" max="120" required>
@@ -85,7 +83,7 @@ function sort(col) {
   t.dataset.sort = asc ? "asc" : "desc";
 }
 
-// rövidítések a mezőkhöz
+
 const nInput = document.getElementById("n");
 const kInput = document.getElementById("k");
 const vInput = document.getElementById("v");
@@ -93,6 +91,8 @@ const eInput = document.getElementById("e");
 const t = document.getElementById("t");
 const form = document.querySelector("form");
 </script>
-
+<footer>
+  Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
+</footer>
 </body>
 </html>

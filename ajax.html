@@ -1,36 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>AJAX</title>
+  <meta charset="UTF-8">
+  <title>AJAX példa</title>
+  
+  <link rel="stylesheet" href="style.css">
+  <script src="ajax.js" defer></script>
+  <script src="kijelez.js" defer></script>
+
 </head>
 <body>
-    <header>
-        <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>        
-    </header>
-    <nav>
-        <ul>
-            <li>
-                <a href="tablazat.html">Táblázat</a>
-            </li>
-            <li>
-                <a href="html_5.html">HTML5</a>
-            </li>
-            <li>
-                <a href="chartjs.html">ChartJS</a>
-            </li>
-            <li>
-                <a href="ajax.html">AJAX</a>
-            </li>
-            <li>
-                <a href="oojs.html">OOJS</a>
-            </li>
-        </ul>
-    </nav>
-    <footer>
-        Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
-    </footer>
+  <header>
+    <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>        
+</header>
+<nav>
+    <ul>
+        <li>
+            <a href="tablazat.html">Táblázat</a>
+        </li>
+        <li>
+            <a href="html_5.html">HTML5</a>
+        </li>
+        <li>
+            <a href="chartjs.html">ChartJS</a>
+        </li>
+        <li>
+            <a href="ajax.html">AJAX</a>
+        </li>
+        <li>
+            <a href="oojs.html">OOJS</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+<h2>Read (összes adat)</h2>
+<button onclick="readData()">Adatok betöltése</button>
+<div id="output"></div>
+<div id="summary"></div>
+
+<h2>Create / Update</h2>
+<input id="id" placeholder="ID (update-hez)">
+<input id="name" placeholder="Név">
+<input id="height" placeholder="Magasság">
+<button onclick="createData()">Létrehozás</button>
+<button onclick="getDataForId()">getDataForId</button>
+<button onclick="updateData()">Frissítés</button>
+
+<h2>Delete</h2>
+<input id="deleteId" placeholder="ID törléshez">
+<button onclick="deleteData()">Törlés</button>
+
+<div id="msg"></div>
+<footer>
+  Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
+</footer>
 </body>
 </html>

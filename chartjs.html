@@ -1,36 +1,57 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hu">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>ChartJS</title>
+  <meta charset="UTF-8">
+  <title>ChartJS példa</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script src="chartjs.js" defer></script>
+  <script src="kijelez.js" defer></script>
+
 </head>
 <body>
-    <header>
-        <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>        
-    </header>
-    <nav>
-        <ul>
-            <li>
-                <a href="tablazat.html">Táblázat</a>
-            </li>
-            <li>
-                <a href="html_5.html">HTML5</a>
-            </li>
-            <li>
-                <a href="chartjs.html">ChartJS</a>
-            </li>
-            <li>
-                <a href="ajax.html">AJAX</a>
-            </li>
-            <li>
-                <a href="oojs.html">OOJS</a>
-            </li>
-        </ul>
-    </nav>
-    <footer>
-        Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
-    </footer>
+  <header>
+    <h1 class="header">Web-programozás-1 Előadás Házi feladat</h1>        
+</header>
+<nav>
+    <ul>
+        <li>
+            <a href="tablazat.html">Táblázat</a>
+        </li>
+        <li>
+            <a href="html_5.html">HTML5</a>
+        </li>
+        <li>
+            <a href="chartjs.html">ChartJS</a>
+        </li>
+        <li>
+            <a href="ajax.html">AJAX</a>
+        </li>
+        <li>
+            <a href="oojs.html">OOJS</a>
+        </li>
+    </ul>
+</nav>
+
+
+<h2>Kattints egy táblázatsorra:</h2>
+
+<table>
+  <tbody>
+    <tr><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><td>2</td><td>4</td><td>6</td><td>8</td><td>10</td></tr>
+    <tr><td>3</td><td>6</td><td>9</td><td>12</td><td>15</td></tr>
+    <tr><td>4</td><td>8</td><td>12</td><td>16</td><td>20</td></tr>
+    <tr><td>5</td><td>10</td><td>15</td><td>20</td><td>25</td></tr>
+  </tbody>
+</table>
+
+<canvas id="myChart" width="400" height="200"></canvas>
+
+
+<footer>
+  Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
+</footer>
 </body>
 </html>
