@@ -11,7 +11,7 @@ class Animal {
     render() {
       const p = document.createElement("p");
       p.textContent = this.speak();
-      document.body.appendChild(p);
+      document.querySelector("nav").insertAdjacentElement('afterend', p);
     }
   }
   
