@@ -100,7 +100,7 @@ function startSSE() {
 // Geolocation
 function getLocation() {
   navigator.geolocation.getCurrentPosition(pos => {
-    document.getElementById("geo").textContent = `Lat: ${pos.coords.latitude}, Lon: ${pos.coords.longitude}`;
+    document.getElementById("geo").textContent = `Szélesség: ${pos.coords.latitude}, Hosszúság: ${pos.coords.longitude}`;
   });
 }
 
