@@ -1,4 +1,4 @@
-const API_URL = "https://example.com/api/data"; // helyettesítsd a valós API-val
+const API_URL = "http://gamf.nhely.hu/ajax1/";
 
 function readData() {
   fetch(API_URL)
