@@ -15,4 +15,4 @@
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
 
 	curl_exec($ch);
-
+?>
