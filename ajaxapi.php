@@ -1,7 +1,7 @@
 <?php
 	$fields	= [];
 
-	foreach(["op", "code", "name", "height", "weight", "id"] as $f) {
+	foreach(["id", "name", "height"] as $f) {
 		if(isset($_POST[$f])) {
 			$fields[$f]	= $_POST[$f];
 		}
