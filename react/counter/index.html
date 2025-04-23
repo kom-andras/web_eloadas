@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Counter App</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module">
+      import React, { useState } from 'https://esm.sh/react';
+      import { createRoot } from 'https://esm.sh/react-dom/client';
+
+      function App() {
+        const [count, setCount] = useState(0);
+        return (
+          <div>
+            <h1>Számláló: {count}</h1>
+            <button onClick={() => setCount(count + 1)}>Növel</button>
+          </div>
+        );
+      }
+
+      const root = createRoot(document.getElementById('root'));
+      root.render(<App />);
+    </script>
+  </body>
+</html>
