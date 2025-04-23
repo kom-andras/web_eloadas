@@ -1,4 +1,4 @@
-const API_URL = "https://kom-andras.github.io/web_eloadas/demo_sse.php";
+const API_URL = "https://kom-andras.github.io/web_eloadas/ajaxapi.php";
 
 function readData() {
   fetch(API_URL)
