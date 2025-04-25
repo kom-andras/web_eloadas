@@ -1,5 +1,5 @@
 const API_URL = "https://kom-andras.github.io/web_eloadas/ajaxapi.php";
-const CODE = "UA5ECLefg456"; // Cseréld ki a saját kódodra
+const CODE = "UA5ECLefg456";
 
 function readData() {
   fetch(API_URL, {
@@ -24,11 +24,12 @@ function readData() {
     });
 }
 
-function validate(name, height) {
-  if (!name || !height) return "Nem lehet üres!";
-  if (name.length > 30 || height.length > 30) return "Túl hosszú!";
+function validate(name, height, weight) {
+  if (!name || !height || !weight) return "Nem lehet üres!";
+  if (name.length > 30 || height.length > 30 || weight.length > 30) return "Túl hosszú!";
   return null;
 }
+
 
 function createData() {
   const name = document.getElementById("name").value;
