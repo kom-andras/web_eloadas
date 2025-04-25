@@ -1,4 +1,4 @@
-const API_URL = "http://gamf.nhely.hu/ajax2/";
+const API_URL = "https://kom-andras.github.io/web_eloadas/ajaxapi.php";
 const CODE = "UA5ECLefg456"; // Cseréld ki a saját kódodra
 
 function readData() {
