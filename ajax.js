@@ -1,5 +1,5 @@
 const API_URL = "http://gamf.nhely.hu/ajax2/";
-const CODE = "BBBBBBefg456"; // Cseréld ki a saját kódodra
+const CODE = "UA5ECLefg456"; // Cseréld ki a saját kódodra
 
 function readData() {
   fetch(API_URL, {
