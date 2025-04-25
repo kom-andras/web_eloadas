@@ -1,13 +1,21 @@
-const API_URL = "http://gamf.nhely.hu/ajax1/";
+const API_URL = "http://gamf.nhely.hu/ajax2/";
+const CODE = "BBBBBBefg456"; // Cseréld ki a saját kódodra
 
 function readData() {
-  fetch(API_URL)
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      op: "read",
+      code: CODE
+    })
+  })
     .then(res => res.json())
     .then(data => {
-      const out = data.map(d => `ID: ${d.id}, Név: ${d.name}, Magasság: ${d.height}`).join("<br>");
+      const out = data.list.map(d => `ID: ${d.id}, Név: ${d.name}, Magasság: ${d.height}`).join("<br>");
       document.getElementById("output").innerHTML = out;
 
-      const heights = data.map(d => Number(d.height));
+      const heights = data.list.map(d => Number(d.height));
       const sum = heights.reduce((a, b) => a + b, 0);
       const avg = (sum / heights.length).toFixed(2);
       const max = Math.max(...heights);
@@ -25,14 +33,67 @@ function validate(name, height) {
 function createData() {
   const name = document.getElementById("name").value;
   const height = document.getElementById("height").value;
+  const weight = document.getElementById("weight").value;
   const error = validate(name, height);
   if (error) return showMsg(error, true);
 
   fetch(API_URL, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, height })
-  }).then(() => showMsg("Sikeres létrehozás!"));
+    body: JSON.stringify({
+      op: "create",
+      name,
+      height,
+      weight,
+      code: CODE
+    })
+  }).then(res => res.json())
+    .then(() => showMsg("Sikeres létrehozás!"))
+    .catch(err => showMsg("Hiba a kérés közben: " + err.message, true));
+}
+
+function updateData() {
+  const id = document.getElementById("id").value;
+  const name = document.getElementById("name").value;
+  const height = document.getElementById("height").value;
+  const weight = document.getElementById("weight").value;
+  const error = validate(name, height);
+  if (error) return showMsg(error, true);
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      op: "update",
+      id,
+      name,
+      height,
+      weight,
+      code: CODE
+    })
+  }).then(res => res.json())
+    .then(() => showMsg("Sikeres frissítés!"));
+}
+
+function deleteData() {
+  const id = document.getElementById("deleteId").value;
+
+  fetch(API_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      op: "delete",
+      id,
+      code: CODE
+    })
+  }).then(res => res.json())
+    .then(() => showMsg("Törlés sikeres!"));
+}
+
+function showMsg(msg, isError = false) {
+  const div = document.getElementById("msg");
+  div.textContent = msg;
+  div.style.color = isError ? "red" : "green";
 }
 
 function getDataForId() {
@@ -43,30 +104,4 @@ function getDataForId() {
       document.getElementById("name").value = data.name;
       document.getElementById("height").value = data.height;
     });
-}
-
-function updateData() {
-  const id = document.getElementById("id").value;
-  const name = document.getElementById("name").value;
-  const height = document.getElementById("height").value;
-  const error = validate(name, height);
-  if (error) return showMsg(error, true);
-
-  fetch(`${API_URL}/${id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name, height })
-  }).then(() => showMsg("Sikeres frissítés!"));
-}
-
-function deleteData() {
-  const id = document.getElementById("deleteId").value;
-  fetch(`${API_URL}/${id}`, { method: "DELETE" })
-    .then(() => showMsg("Törlés sikeres!"));
-}
-
-function showMsg(msg, isError = false) {
-  const div = document.getElementById("msg");
-  div.textContent = msg;
-  div.style.color = isError ? "red" : "green";
-}
+  }
