@@ -42,10 +42,10 @@
 <table id="t">
   <thead>
     <tr>
-      <th onclick="sort(0)">Név</th>
-      <th onclick="sort(1)">Kor</th>
-      <th onclick="sort(2)">Város</th>
-      <th onclick="sort(3)">Email</th>
+      <th>Név</th>
+      <th>Kor</th>
+      <th>Város</th>
+      <th>Email</th>
       <th>Művelet</th>
     </tr>
     <tr>
@@ -59,44 +59,61 @@
 </table>
 
 <script>
-function addRow() {
-  const n = nInput.value, k = kInput.value, v = vInput.value, e = eInput.value;
-  const r = t.insertRow();
-  [n,k,v,e].forEach(val => r.insertCell().textContent = val);
-  r.insertCell().innerHTML = '<button onclick="editRow(this)">✏️</button> <button onclick="delRow(this)">❌</button>';
-  form.reset();
-}
-
-function delRow(btn) {
-  btn.closest('tr').remove();
-}
-
-function editRow(btn) {
-  const c = btn.closest('tr').cells;
-  [nInput.value, kInput.value, vInput.value, eInput.value] = [c[0].textContent, c[1].textContent, c[2].textContent, c[3].textContent];
-  delRow(btn);
-}
-
-function sort(col) {
-  const rows = Array.from(t.tBodies[0].rows);
-  const asc = t.dataset.sort !== "asc";
-  rows.sort((a, b) => {
-    const A = a.cells[col].textContent;
-    const B = b.cells[col].textContent;
-    return (isNaN(A) ? A.localeCompare(B) : A - B) * (asc ? 1 : -1);
+  const nInput = document.getElementById("n");
+  const kInput = document.getElementById("k");
+  const vInput = document.getElementById("v");
+  const eInput = document.getElementById("e");
+  const t = document.getElementById("t");
+  const form = document.querySelector("form");
+  
+  function addRow() {
+    const n = nInput.value, k = kInput.value, v = vInput.value, e = eInput.value;
+    const r = t.tBodies[0].insertRow();
+    [n, k, v, e].forEach(val => r.insertCell().textContent = val);
+    r.insertCell().innerHTML = '<button onclick="editRow(this)">✏️</button> <button onclick="delRow(this)">❌</button>';
+    form.reset();
+  }
+  
+  function delRow(btn) {
+    btn.closest('tr').remove();
+  }
+  
+  function editRow(btn) {
+    const c = btn.closest('tr').cells;
+    [nInput.value, kInput.value, vInput.value, eInput.value] = [c[0].textContent, c[1].textContent, c[2].textContent, c[3].textContent];
+    delRow(btn);
+  }
+  
+  function sortTable(col) {
+    console.log("Sort called on column:", col);
+    const rows = Array.from(t.tBodies[0].rows);
+    const asc = t.dataset.sort !== "asc";
+    rows.sort((a, b) => {
+      let A = a.cells[col].textContent.trim();
+      let B = b.cells[col].textContent.trim();
+  
+      if (col === 1) { // "Kor" oszlop, számként rendez
+        A = Number(A);
+        B = Number(B);
+        return (A - B) * (asc ? 1 : -1);
+      }
+  
+      return A.localeCompare(B) * (asc ? 1 : -1);
+    });
+  
+    rows.forEach(r => t.tBodies[0].appendChild(r));
+    t.dataset.sort = asc ? "asc" : "desc";
+  }
+  
+  // Modern eseménykezelés – nem HTML-ből hívunk, hanem itt hozzárendeljük
+  document.querySelectorAll("#t thead th").forEach((th, index) => {
+    if (index < 4) { // Csak az első 4 oszlop rendezhető
+      th.style.cursor = "pointer"; // kéz ikon
+      th.addEventListener("click", () => sortTable(index));
+    }
   });
-  rows.forEach(r => t.tBodies[0].appendChild(r));
-  t.dataset.sort = asc ? "asc" : "desc";
-}
-
-
-const nInput = document.getElementById("n");
-const kInput = document.getElementById("k");
-const vInput = document.getElementById("v");
-const eInput = document.getElementById("e");
-const t = document.getElementById("t");
-const form = document.querySelector("form");
-</script>
+  </script>
+  
 <footer>
   Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
 </footer>
