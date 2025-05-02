@@ -39,6 +39,9 @@
   <button>+</button>
 </form>
 
+<!-- Search input for filtering the table -->
+<input id="search" type="text" placeholder="Keresés..." oninput="filterTable()">
+
 <table id="t">
   <thead>
     <tr>
@@ -48,29 +51,49 @@
       <th>Email</th>
       <th>Művelet</th>
     </tr>
-    <tr>
-      <td>Gipsz Jakab</td>
-      <td>20</td>
-      <td>Kecskemét</td>
-      <td>gipsz.jakab@gmail.com</td>
-      <td><button onclick="editRow(this)">✏️</button> <button onclick="delRow(this)">❌</button></td>
-    </tr>
-    <tr>
-      <td>Kala Pál</td>
-      <td>22</td>
-      <td>Szeged</td>
-      <td>kala.pal@gmail.com</td>
-      <td><button onclick="editRow(this)">✏️</button> <button onclick="delRow(this)">❌</button></td>
-    </tr>
-    <tr>
-      <td>Kovács István</td>
-      <td>18</td>
-      <td>Budapest</td>
-      <td>kovacs.istvan@gmail.com</td>
-      <td><button onclick="editRow(this)">✏️</button> <button onclick="delRow(this)">❌</button></td>
-    </tr>
   </thead>
-  <tbody></tbody>
+  <tbody>
+    <tr>
+      <td>John Doe</td>
+      <td>25</td>
+      <td>New York</td>
+      <td>john.doe@example.com</td>
+      <td>
+        <button onclick="editRow(this)">✏️</button>
+        <button onclick="delRow(this)">❌</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Jane Smith</td>
+      <td>30</td>
+      <td>Los Angeles</td>
+      <td>jane.smith@example.com</td>
+      <td>
+        <button onclick="editRow(this)">✏️</button>
+        <button onclick="delRow(this)">❌</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Michael Brown</td>
+      <td>40</td>
+      <td>Chicago</td>
+      <td>michael.brown@example.com</td>
+      <td>
+        <button onclick="editRow(this)">✏️</button>
+        <button onclick="delRow(this)">❌</button>
+      </td>
+    </tr>
+    <tr>
+      <td>Emily Davis</td>
+      <td>35</td>
+      <td>Houston</td>
+      <td>emily.davis@example.com</td>
+      <td>
+        <button onclick="editRow(this)">✏️</button>
+        <button onclick="delRow(this)">❌</button>
+      </td>
+    </tr>
+  </tbody>
 </table>
 
 <script>
@@ -80,7 +103,7 @@
   const eInput = document.getElementById("e");
   const t = document.getElementById("t");
   const form = document.querySelector("form");
-  
+
   function addRow() {
     const n = nInput.value, k = kInput.value, v = vInput.value, e = eInput.value;
     const r = t.tBodies[0].insertRow();
@@ -88,49 +111,52 @@
     r.insertCell().innerHTML = '<button onclick="editRow(this)">✏️</button> <button onclick="delRow(this)">❌</button>';
     form.reset();
   }
-  
+
   function delRow(btn) {
     btn.closest('tr').remove();
   }
-  
+
   function editRow(btn) {
     const c = btn.closest('tr').cells;
     [nInput.value, kInput.value, vInput.value, eInput.value] = [c[0].textContent, c[1].textContent, c[2].textContent, c[3].textContent];
     delRow(btn);
   }
-  
+
   function sortTable(col) {
-    console.log("Sort called on column:", col);
     const rows = Array.from(t.tBodies[0].rows);
     const asc = t.dataset.sort !== "asc";
     rows.sort((a, b) => {
       let A = a.cells[col].textContent.trim();
       let B = b.cells[col].textContent.trim();
-  
+
       if (col === 1) { // "Kor" oszlop, számként rendez
         A = Number(A);
         B = Number(B);
         return (A - B) * (asc ? 1 : -1);
       }
-  
+
       return A.localeCompare(B) * (asc ? 1 : -1);
     });
-  
+
     rows.forEach(r => t.tBodies[0].appendChild(r));
     t.dataset.sort = asc ? "asc" : "desc";
   }
-  
-  // Modern eseménykezelés – nem HTML-ből hívunk, hanem itt hozzárendeljük
+
+  function filterTable() {
+    const searchValue = document.getElementById("search").value.toLowerCase();
+    const rows = t.tBodies[0].rows;
+
+    for (const row of rows) {
+      const cells = Array.from(row.cells).slice(0, 4); // Only check the first 4 columns
+      const matches = cells.some(cell => cell.textContent.toLowerCase().includes(searchValue));
+      row.style.display = matches ? "" : "none";
+    }
+  }
+
   document.querySelectorAll("#t thead th").forEach((th, index) => {
     if (index < 4) { // Csak az első 4 oszlop rendezhető
       th.style.cursor = "pointer"; // kéz ikon
       th.addEventListener("click", () => sortTable(index));
     }
   });
-  </script>
-  
-<footer>
-  Rácz Elemér Roland - GFBQXX, Komlósi András - UA5ECL
-</footer>
-</body>
-</html>
+</script>
